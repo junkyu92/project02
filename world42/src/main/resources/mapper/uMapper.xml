@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="users">
+
+	<!-- 회원가입 -->
+	<insert id="cr" parameterType="usersDTO">
+		insert into USERS(MEMID,MEMPW,MNAME,MBDAY,TEL) values (#{memid},#{mempw},#{mname},#{mbday},#{tel})
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="re" parameterType="usersDTO" resultType="usersDTO">
+		select * from USERS where memid = #{memid} and mempw = #{mempw}
+	</select>	
+	
+	<!-- 방명록가기 -->
+	<select id="re3" parameterType="usersDTO" resultType="usersDTO">
+		select * from USERS where memid = #{memid}
+	</select>
+	
+	<!-- 회원수정 -->
+	<update id="up" parameterType="usersDTO" >
+		update USERS set mempw = #{mempw},mname = #{mname},tel = #{tel} where memid = #{memid}
+	</update>
+	
+	<!-- 회원정보 불러오기 -->
+	<select id="re2" parameterType="usersDTO" resultType="usersDTO">
+		select * from USERS where memid = #{memid}
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<delete id="de" parameterType="usersDTO">
+		delete from USERS where memid = #{memid}
+	</delete>
+	
+	<!-- 아이디 중복확인 -->
+	<select id="re1" parameterType="usersDTO" resultType="usersDTO">
+		select memid from USERS where memid = #{memid}
+	</select>
+</mapper>

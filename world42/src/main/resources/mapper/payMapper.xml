@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pay">
+	<select id="acorn" parameterType="String" resultType="Integer">
+		select MACORN from USERS where MEMID = #{memid}
+	</select>
+	<select id="info" parameterType="String" resultType="usersDTO">
+		select MNAME,TEL from USERS where MEMID = #{memid}
+	</select>
+	<insert id="create" parameterType="payDTO">
+		insert into PAY values (seq_pay.NEXTVAL,#{memid},#{pay_data},#{pay_datetime},#{pay_total})
+	</insert>
+	<update id="addAcorn" parameterType="payDTO">
+		update USERS set MACORN = MACORN + #{pay_total} where memid = #{memid}
+	</update>
+	<select id="list" parameterType="String" resultType="payDTO">
+		select * from pay where memid = #{memid}
+	</select>
+</mapper>

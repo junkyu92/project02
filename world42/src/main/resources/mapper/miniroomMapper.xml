@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mini">
+
+	<!-- 회원가입시 미니룸 생성 -->
+	<insert id="insert" parameterType="usersDTO">
+		INSERT INTO miniroom (miniidx, midx, roomopt, miniopt, minimix, minimiy, ifbubble, bubble)
+			SELECT MINI_SEQ.NEXTVAL, midx, 0, 0, 1500, 400, 0, 'Welcome' FROM main WHERE memid = #{memid}
+	</insert>
+	
+	<!-- 미니룸 변경사항 저장 -->
+	<update id="update" parameterType="miniDTO">
+		UPDATE miniroom SET roomopt = #{roomOpt}, miniopt = #{miniOpt},
+			minimix = #{minimiX}, minimiy = #{minimiY}, ifbubble = #{ifBubble},
+			bubble = #{bubble} WHERE midx = #{mIdx}
+	</update>
+	
+	<!-- 미니룸 읽어오기 -->
+	<select id="readRoom" parameterType="miniDTO" resultType="miniDTO">
+		SELECT * FROM miniroom WHERE midx = #{mIdx}
+	</select>
+	 
+</mapper>

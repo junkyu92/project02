@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="photo">
+	
+	<insert id="create" parameterType="photoDTO">
+		insert into PHOTO (phid, memid, phphoto, phtitle, phcontent, phday) values (PHOTO_phid.nextval, #{memid}, #{phphoto}, #{phtitle}, #{phcontent}, (to_char(sysdate,'yyyy.mm.dd hh24:mi')))
+	</insert>
+	
+	<select id="all" parameterType="photoDTO" resultType="photoDTO">
+		select * from PHOTO where memid = #{memid}
+	</select>
+	
+	<select id="one" parameterType="photoDTO" resultType="photoDTO">
+		select * from PHOTO where phid = #{phid}
+	</select>
+	
+	<delete id="del" parameterType="photoDTO">
+		delete from PHOTO where phid = #{phid}
+	</delete>
+	
+	<update id="up" parameterType="photoDTO">
+		update PHOTO set phtitle = #{phtitle}, phcontent = #{phcontent} where phid = #{phid}
+	</update>
+	
+</mapper>
