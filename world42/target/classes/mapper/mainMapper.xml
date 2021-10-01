@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+
+	<!-- 회원 가입시 main 테이블에 레코드 생성 -->
+	<insert id="insert" parameterType="usersDTO">
+		INSERT INTO main VALUES(MAIN_SEQ.NEXTVAL, #{memid}, '사이월드 미니홈피', 'default.jpg', '환영합니다!', 0, 0, null)
+	</insert>
+	
+	<!-- main 전체, 회원 이름, 일촌 목록, 도토리개수 읽어오기 -->
+	<select id="readAll" parameterType="mainDTO" resultType="mainDTO">
+		SELECT m.*, u.mname FROM main m JOIN users u 
+		ON m.memid = u.memid WHERE m.memid = #{memid}
+	</select>
+	
+	<!-- 회원 검색 -->
+	<select id="search" parameterType="mainDTO" resultMap="searchMap">
+		<!-- myBatis 문법은 DBMS 별로 쿼리가 조금씩 다르다 -->
+		SELECT memid, mname FROM users WHERE mname LIKE '%'||#{mName}||'%' 
+	</select>
+	<!-- 검색된 회원 id, 이름 담을 맵 resultMap 설정 -->
+	<resultMap type="java.util.HashMap" id="searchMap">
+		<result column="memid" property="memid" />
+		<result column="mname" property="mname" />
+	</resultMap>
+	
+	<!-- 일촌 목록에서 split해서 회원 id, 이름 읽어오기 -->
+	<select id="read1chon" parameterType="mainDTO" resultMap="m1chonMap">
+		SELECT memid, mname FROM users WHERE memid IN (
+			SELECT REGEXP_SUBSTR(m1chon, '[^,]+', 1, LEVEL) AS memid
+			FROM (
+				SELECT m1chon FROM users WHERE memid = #{memid}
+			)
+			CONNECT BY LEVEL <![CDATA[ < ]]>= LENGTH(REGEXP_REPLACE(m1chon, '[^,]+', '')) + 1
+		)
+	</select>
+	<!-- 회원 id, 이름 담을 맵 resultMap 설정 -->
+	<resultMap type="java.util.HashMap" id="m1chonMap">
+		<result column="memid" property="memid" />
+		<result column="mname" property="mname" />
+	</resultMap>
+	
+	<!-- 일촌인지 확인 (일촌이 아니면 결과값이 0이다) -->
+	<select id="if1chon" parameterType="mainDTO" resultType="mainDTO">
+		SELECT INSTR(m1chon, #{memid}) as if1chon FROM users WHERE memid = #{sessionId}
+	</select>
+	
+	<!-- 09.25 수정 -->
+	<!-- 일촌 맺기 -->
+	<update id="add1chon" parameterType="mainDTO">
+		UPDATE users SET m1chon = 
+			(SELECT m1chon FROM users WHERE memid = #{sessionId})||#{memid}||','
+		WHERE memid = #{sessionId}
+	</update>
+	
+	<!-- 09.25 수정 -->
+	<!-- 일촌 끊기 -->
+	<update id="rmv1chon" parameterType="mainDTO">
+		UPDATE users SET m1chon =
+			(SELECT REPLACE(m1chon, #{memid}||',') FROM users WHERE memid = #{sessionId})
+		WHERE memid = #{sessionId}
+	</update>
+	
+	<!-- 일일 방문자수, 전체 방문자수 1씩 증가 -->
+	<update id="visitUp" parameterType="mainDTO">
+		UPDATE main SET mtoday = mtoday + 1, mtotal = mtotal + 1 WHERE memid = #{memid}
+	</update>
+	
+	<!-- 미니홈피 타이틀 불러오기 (메인에 ajax로 연결됨) -->
+	<select id="readTitle" parameterType="mainDTO" resultType="mainDTO">
+		SELECT mtitle FROM main WHERE midx = #{mIdx}
+	</select>
+	
+	<!-- 미니홈피 타이틀 수정하기 (메인에 ajax로 연결됨) -->
+	<update id="updateTitle" parameterType="mainDTO">
+		UPDATE main SET mtitle = #{mTitle} WHERE midx = #{mIdx}
+	</update>
+	
+	<!-- 미니홈피 프로필 불러오기 (메인에 ajax로 연결됨) -->
+	<select id="readProfile" parameterType="mainDTO" resultType="mainDTO">
+		SELECT mpro FROM main WHERE midx = #{mIdx}
+	</select>
+	
+	<!-- 미니홈피 메인 사진 불러오기 (메인에 ajax로 연결됨) -->
+	<select id="readPic" parameterType="mainDTO" resultType="mainDTO">
+		SELECT mimg FROM main WHERE midx = #{mIdx}
+	</select>
+	
+	<!-- 미니홈피 프로필 수정하기 (메인에 ajax로 연결됨) -->
+	<update id="updateProfile" parameterType="mainDTO">
+		UPDATE main SET mpro = #{mPro} WHERE midx = #{mIdx}
+	</update>
+	
+	<!-- 미니홈피 메인 사진 수정하기 (메인에 ajax로 연결됨) -->
+	<update id="updatePic" parameterType="mainDTO">
+		UPDATE main SET mimg = #{mImg} WHERE midx = #{mIdx}
+	</update>
+	
+	<!-- 09.25 추가 -->
+	<!-- 우측 상단 bgm수, 도토리개수, 일촌 수 가져오기 -->
+	<select id="readQty" parameterType="mainDTO" resultType="mainDTO">
+		SELECT m.bgm_list, u.macorn, u.m1chon FROM main m JOIN users u
+		ON m.memid = u.memid WHERE m.memid = #{memid}
+	</select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="diarypage">
+	<select id="readAll" parameterType="diaryPageDTO" resultType="diaryPageDTO">
+		SELECT * FROM DIARY_PAGE WHERE BOOK_ID = #{book_id} 
+	</select> 
+	
+	<select id="readOne" parameterType="diaryPageDTO" resultType="diaryPageDTO">
+		SELECT * FROM DIARY_PAGE WHERE ID = #{id} 
+	</select> 
+	
+	<insert id="add" parameterType="diaryPageDTO">
+		INSERT INTO DIARY_PAGE (ID, BOOK_ID, CONTENT, MEM_ID, "DATE", TITLE)
+		VALUES(SEQ_DIARYPAGE.NEXTVAL, #{book_id}, #{content}, #{mem_id}, SYSDATE, #{title})
+	</insert>
+	
+	<delete id="delete" parameterType="diaryPageDTO">
+		DELETE FROM DIARY_PAGE 
+		WHERE ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="diaryPageDTO">
+		UPDATE DIARY_PAGE 
+		SET 
+		CONTENT=#{content}, TITLE=#{title}
+		WHERE 
+		ID=#{id}
+	</update>
+</mapper>

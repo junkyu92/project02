@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bgm">
+<select id="list" resultType="bgmDTO">
+	select * from BGM
+</select>
+<update id="add" parameterType="mainDTO">
+	update MAIN set BGM_LIST = concat(BGM_LIST, #{bgm_list}) where MEMID = #{memid}
+</update>
+<update id="pay" parameterType="mainDTO">
+	update USERS set MACORN = MACORN - 500 * regexp_count(#{bgm_list}, ',') where MEMID = #{memid}
+</update>
+</mapper> 

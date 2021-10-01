@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.project02.world42.DTO.PayDTO"
+			alias="payDTO"></typeAlias>
+			<typeAlias alias="guestDTO" type="com.project02.world42.DTO.GuestDTO"/>
+		<typeAlias alias="mainDTO"
+			type="com.project02.world42.DTO.MainDTO" />
+		<typeAlias alias="cmntDTO"
+			type="com.project02.world42.DTO.CmntDTO" />
+		<typeAlias alias="usersDTO"
+			type="com.project02.world42.DTO.UsersDTO" />
+		<typeAlias alias="bgmDTO"
+			type="com.project02.world42.DTO.BgmDTO" />
+			<typeAlias alias="miniDTO" type="com.project02.world42.DTO.MiniroomDTO"/>
+	<typeAlias alias="diaryBookDTO" type="com.project02.world42.DTO.DiaryBookDTO"/>
+
+<typeAlias alias="diaryPageDTO" type="com.project02.world42.DTO.DiaryPageDTO"/>
+<typeAlias alias="photoDTO" type="com.project02.world42.DTO.PhotoDTO"/>
+
+<typeAlias alias="preplyDTO" type="com.project02.world42.DTO.PreplyDTO"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/payMapper.xml" />
+		<mapper resource="mapper/mainMapper.xml" />
+		<mapper resource="mapper/cmntMapper.xml" />
+		<mapper resource="mapper/bgmMapper.xml" />
+		<mapper resource="mapper/miniroomMapper.xml"/>
+		<mapper resource="mapper/diaryBookMapper.xml"/>
+		<mapper resource="mapper/PhotoMapper.xml"/>
+<mapper resource="mapper/uMapper.xml"/>
+
+<mapper resource="mapper/gMapper.xml"/>
+<mapper resource="mapper/PreplyMapper.xml"/>
+
+<mapper resource="mapper/diaryPageMapper.xml"/>
+	</mappers>
+</configuration>
