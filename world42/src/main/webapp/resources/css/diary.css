@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+
+#diaryRight {
+	background: white;
+	position: absolute;
+	border: 1px solid black;
+	top: 120px;
+	right: 100px;
+	border: 1px solid black;
+	width: 730px;
+	height: 600px;
+	overflow: auto;
+}
+
+#diaryLeftCal {
+	overflow: auto;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+	align-items: center;
+    justify-items: center;
+	grid-template-areas: 
+		"head    head    head    head    head    head    head";
+}
+
+.diaryLeftCalHead {
+	grid-area: head;
+}
+
+
+
+#diaryLeftBook {
+	overflow: auto;
+}

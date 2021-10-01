@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+#mainLeft button{
+	margin: 10px;
+	border: none;
+	background: white;
+	font-size: 18px;
+	color: #0000a0;
+}
+#acornPage{
+	font-size: 18px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+#in1{
+	font-size: 18px;
+}
+#acornPage button{
+	font-size: 17px;
+}
+#bPay{
+	margin-top: 50px;
+}
+.ownBgmId{
+	width: 50px;
+	text-align: center;
+	padding: 0;
+}
+.tableTitle{
+	text-align: center;
+	padding: 0;
+}
+.table1{
+	width: 250px;
+	padding: 0;
+}
+.table2{
+	width: 330px;	
+	padding: 0;
+}
+table {
+	width: 730px;
+	padding: 0;
+	border-top: 1px solid #c0c0c0;
+    border-collapse: collapse;
+}
+table td{
+	border-bottom: 1px solid #c0c0c0;
+	border-left: 1px solid #c0c0c0;
+}
+td:first-child {
+    border-left: none;
+  }
